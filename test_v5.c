@@ -190,6 +190,7 @@ int main(int argc, char *argv[]){
 	memcpy(gateway_packet, gateway_ether_hdr, sizeof(gateway_ether_hdr));
 	memcpy(gateway_packet + 14, &gateway_arphdr, sizeof(gateway_arphdr));
 
+	
 	if(pcap_sendpacket(handle, packet, 42) != 0)
 	{
 		printf("error");
@@ -198,6 +199,7 @@ int main(int argc, char *argv[]){
 	{
 		printf("Gateway packet error");
 	}
+	
 
 	while((Res = pcap_next_ex(handle, &header, &p)) >=0)
 	{
@@ -306,14 +308,26 @@ int main(int argc, char *argv[]){
 		printf(" %0.2x", *(gateway_attacker_packet+l2));
 	}*/
 
-	if(pcap_sendpacket(handle, attacker_packet, 42) != 0)
+	/*if(pcap_sendpacket(handle, attacker_packet, 42) != 0)
 	{
 		printf("error");
+	}*/
+	for(int i=0; i<100; i++)
+	{
+		if(pcap_sendpacket(handle, attacker_packet, 42) != 0)
+		{
+			printf("error");
+		}
 	}
 	if(pcap_sendpacket(handle, gateway_attacker_packet, 42) != 0)
 	{
 		printf("error");
 	}
+	/*for(int i=0; i<10; i++)
+	{
+		pcap_sendpacket(handle, packet, 42);
+		pcap_sendpacket(handle, gateway_packet, 42);
+	}*/
 	//else
 	//	printf("clear\n");
 
